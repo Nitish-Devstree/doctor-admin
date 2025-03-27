@@ -2,6 +2,8 @@
 import React from 'react';
 import ThemeProvider from './ThemeToggle/theme-provider';
 import { SessionProvider, SessionProviderProps } from 'next-auth/react';
+import TanstackProviders from './tanstack-provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 export default function Providers({
   session,
   children
@@ -12,7 +14,12 @@ export default function Providers({
   return (
     <>
       <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <TanstackProviders>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </TanstackProviders>
+        </SessionProvider>
       </ThemeProvider>
     </>
   );
