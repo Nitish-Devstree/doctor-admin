@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  Building,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -20,6 +21,7 @@ import {
   LucideShoppingBag,
   Moon,
   MoreVertical,
+  NotepadText,
   Pizza,
   Plus,
   Settings,
@@ -30,6 +32,7 @@ import {
   UserCircle2Icon,
   UserPen,
   UserX2Icon,
+  Video,
   X
 } from 'lucide-react';
 
@@ -64,6 +67,9 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  building: Building,
+  video: Video,
+  'notepad-text-dashed': NotepadText,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden='true'

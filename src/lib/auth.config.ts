@@ -1,5 +1,5 @@
 import API from '@/instance/api';
-import instance from '@/instance/intance';
+import axios from 'axios';
 import { CredentialsSignin, NextAuthConfig } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 
@@ -25,7 +25,7 @@ const authConfig = {
       },
       async authorize(credentials, req) {
         try {
-          const response = await instance.post(API.auth.login, {
+          const response = await axios.post(process.env.NEXT_PUBLIC_API_ENDPOINT_URL + API.auth.login, {
             email: credentials?.email,
             password: credentials?.password,
           });
@@ -50,6 +50,7 @@ const authConfig = {
             return null;
           }
         } catch (e: any) {
+          console.log(e, 'error')
           throw new InvalidLoginError(e.response?.data?.message);
         }
       }

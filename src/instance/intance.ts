@@ -26,6 +26,26 @@ instance.interceptors.request.use(
                 window.location.pathname !== '/login' &&
                 window.location.pathname !== '/forget-password' &&
                 window.location.pathname !== '/reset-password' &&
+                (error.response?.statusCode === 401 || error.response?.statusCode === 403)
+            ) {
+                await signOut({ redirect: false });
+                window.localStorage.clear();
+                toast.error('Someone logged in on another system');
+                window.location.href = '/';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
+instance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (typeof window !== 'undefined') {
+            if (
+                window.location.pathname !== '/login' &&
+                window.location.pathname !== '/forget-password' &&
+                window.location.pathname !== '/reset-password' &&
                 (error.response?.status === 401 || error.response?.status === 403)
             ) {
                 await signOut({ redirect: false });
