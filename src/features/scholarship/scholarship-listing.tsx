@@ -1,12 +1,12 @@
 'use client';
 
-import { DataTable as QuizTable } from '@/components/ui/table/data-table';
+import { DataTable as ScholarshipTable } from '@/components/ui/table/data-table';
 import { DataTableSkeleton } from '@/components/ui/table/data-table-skeleton';
-import { useGetAllQuiz } from '@/hook-api/quiz/quiz.hook';
+import { useGetAllScholarship } from '@/hook-api/scholarship/scholarship.hook';
 import { useSearchParams } from 'next/navigation';
-import { columns } from './component/column';
+import { columns } from './component/columns';
 
-export default function QuizListPage() {
+export default function ScholarshipListPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get('page') ?? 1;
   const search = searchParams.get('q');
@@ -18,16 +18,16 @@ export default function QuizListPage() {
     ...(search && { search: search })
   };
 
-  const { data: quizData, isLoading } = useGetAllQuiz(filters);
+  const { data: scholarshipData, isLoading } = useGetAllScholarship(filters);
   if (isLoading) {
     return <DataTableSkeleton columnCount={6} rowCount={10} />;
   }
 
   return (
-    <QuizTable
+    <ScholarshipTable
       columns={columns}
-      data={quizData?.quizzes || []}
-      totalItems={quizData?.totalCount || 0}
+      data={scholarshipData?.scholarships || []}
+      totalItems={scholarshipData?.totalCount || 0}
     />
   );
 }

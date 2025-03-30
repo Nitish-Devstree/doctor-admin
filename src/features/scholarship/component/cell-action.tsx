@@ -8,14 +8,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Quiz } from '@/constants/data';
-import { useDeleteQuiz } from '@/hook-api/quiz/quiz.hook';
+import { Scholarship } from '@/constants/data';
+import { useDeleteScholarship } from '@/hook-api/scholarship/scholarship.hook';
 import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: Quiz;
+  data: Scholarship;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -24,11 +24,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const closeForm = () => {
     setOpen(false);
   };
-
-  const { mutate: deleteQuiz, isPending: deleteLoading } = useDeleteQuiz(data._id, closeForm);
+  const { mutate, isPending } = useDeleteScholarship(data._id, closeForm);
 
   const onConfirm = async () => {
-    deleteQuiz();
+    mutate();
   };
 
   return (
@@ -37,7 +36,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={onConfirm}
-        loading={deleteLoading}
+        loading={isPending}
       />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
@@ -50,7 +49,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/quiz/${data._id}`)}
+            onClick={() => router.push(`/dashboard/scholarships/${data._id}`)}
           >
             <Edit className='mr-2 h-4 w-4' /> Update
           </DropdownMenuItem>

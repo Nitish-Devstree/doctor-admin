@@ -22,6 +22,20 @@ const API = {
         getById: '/videos',
         create: '/videos'
     },
+    successStory: {
+        getAll: '/success-stories',
+        getById: '/success-stories',
+        create: '/success-stories',
+        update: '/success-stories',
+        delete: '/success-stories'
+    },
+    scholarship: {
+        getAll: '/scholarships',
+        getById: '/scholarships',
+        create: '/scholarships',
+        update: '/scholarships',
+        delete: '/scholarships'
+    },
     quiz: {
         all: '/quiz'
     }

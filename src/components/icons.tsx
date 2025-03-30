@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  Book,
   Building,
   Check,
   ChevronLeft,
@@ -10,6 +11,7 @@ import {
   CreditCard,
   File,
   FileText,
+  GraduationCap,
   HelpCircle,
   Image,
   Laptop,
@@ -69,6 +71,8 @@ export const Icons = {
   laptop: Laptop,
   building: Building,
   video: Video,
+  book: Book,
+  'graduation-cap': GraduationCap,
   'notepad-text-dashed': NotepadText,
   gitHub: ({ ...props }: LucideProps) => (
     <svg

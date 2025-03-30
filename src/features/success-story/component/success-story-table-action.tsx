@@ -1,16 +1,16 @@
 'use client';
 import { DataTableResetFilter } from '@/components/ui/table/data-table-reset-filter';
 import { DataTableSearch } from '@/components/ui/table/data-table-search';
-import { useQuizTableFilters } from './use-quiz-table-filters';
+import { useSuccessStoryTableFilters } from './use-success-story-table-filters';
 
-export function QuizTableAction() {
+export function SuccessStoryTableAction() {
   const {
     isAnyFilterActive,
     resetFilters,
     searchQuery,
     setPage,
     setSearchQuery
-  } = useQuizTableFilters();
+  } = useSuccessStoryTableFilters();
 
   return (
     <div className='flex flex-wrap items-center gap-4'>

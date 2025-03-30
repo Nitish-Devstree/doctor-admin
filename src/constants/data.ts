@@ -63,16 +63,56 @@ export type Video = {
   __v: number;
 }
 
-export type Quiz = {
+export interface SuccessStory {
   _id: string;
   title: string;
   description: string;
-  timeLimit: number;
+  videoLink: string;
+  thumbnail: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type Scholarship = {
+  _id: string;
+  title: string;
+  description: string;
+  websiteUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type SuccessStoryType = {
+  _id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  videoLink: string;
+  isActive: boolean;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  __v: number;
+}
+
+export type Quiz = {
+
   totalMarks: number;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
   questionCount: number;
+  _id?: string;
+  title: string;
+  description: string;
+  timeLimit: number;
+  isResultOut: boolean;
+  questions: Array<{
+    _id?: string;
+    question: string;
+    options: string[];
+    answer: number;
+    isDelete?: boolean;
+  }>;
 };
 
 //Info: The following data is used for the sidebar navigation and Cmd K bar.
@@ -118,42 +158,58 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
-    title: 'Product',
-    url: '/dashboard/product',
-    icon: 'product',
-    shortcut: ['p', 'p'],
+    title: "Success Story",
+    url: '/dashboard/success-story',
+    icon: 'book',
+    shortcut: ['ss', 'ss'],
     isActive: false,
     items: [] // No child items
   },
   {
-    title: 'Account',
-    url: '#', // Placeholder as there is no direct link for the parent
-    icon: 'billing',
-    isActive: true,
+    title: "Scholarship",
+    url: '/dashboard/scholarships',
+    icon: 'graduation-cap',
+    shortcut: ['s', 's'],
+    isActive: false,
+    items: [] // No child items
+  },
+  // {
+  //   title: 'Product',
+  //   url: '/dashboard/product',
+  //   icon: 'product',
+  //   shortcut: ['p', 'p'],
+  //   isActive: false,
+  //   items: [] // No child items
+  // },
+  // {
+  //   title: 'Account',
+  //   url: '#', // Placeholder as there is no direct link for the parent
+  //   icon: 'billing',
+  //   isActive: true,
 
-    items: [
-      {
-        title: 'Profile',
-        url: '/dashboard/profile',
-        icon: 'userPen',
-        shortcut: ['m', 'm']
-      },
-      {
-        title: 'Login',
-        shortcut: ['l', 'l'],
-        url: '/',
-        icon: 'login'
-      }
-    ]
-  },
-  {
-    title: 'Kanban',
-    url: '/dashboard/kanban',
-    icon: 'kanban',
-    shortcut: ['k', 'k'],
-    isActive: false,
-    items: [] // No child items
-  }
+  //   items: [
+  //     {
+  //       title: 'Profile',
+  //       url: '/dashboard/profile',
+  //       icon: 'userPen',
+  //       shortcut: ['m', 'm']
+  //     },
+  //     {
+  //       title: 'Login',
+  //       shortcut: ['l', 'l'],
+  //       url: '/',
+  //       icon: 'login'
+  //     }
+  //   ]
+  // },
+  // {
+  //   title: 'Kanban',
+  //   url: '/dashboard/kanban',
+  //   icon: 'kanban',
+  //   shortcut: ['k', 'k'],
+  //   isActive: false,
+  //   items: [] // No child items
+  // }
 ];
 
 export interface SaleUser {

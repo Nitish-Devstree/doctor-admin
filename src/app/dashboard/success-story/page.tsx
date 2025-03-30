@@ -1,8 +1,8 @@
 import PageContainer from '@/components/layout/page-container';
 import { buttonVariants } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
-import { QuizTableAction } from '@/features/quiz/component/quiz-table-action';
-import QuizListPage from '@/features/quiz/quiz-listing';
+import { SuccessStoryTableAction } from '@/features/success-story/component/success-story-table-action';
+import SuccessStoryListPage from '@/features/success-story/success-story-listing';
 import { cn } from '@/lib/utils';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 import { Plus } from 'lucide-react';
@@ -21,17 +21,17 @@ export default async function Page({ searchParams }: PageProps) {
     <PageContainer scrollable={false}>
       <div className='flex flex-1 flex-col space-y-4'>
         <div className='flex items-start justify-between'>
-          <Heading title='Quiz' description='Manage quiz' />
+          <Heading title='Success Story' description='Manage success stories' />
           <Link
-            href='/dashboard/quiz/new'
+            href='/dashboard/success-story/new'
             className={cn(buttonVariants(), 'text-xs md:text-sm')}
           >
             <Plus className='mr-2 h-4 w-4' /> Add New
           </Link>
         </div>
         <Separator />
-        <QuizTableAction />
-        <QuizListPage />
+        <SuccessStoryTableAction />
+        <SuccessStoryListPage />
       </div>
     </PageContainer>
   );

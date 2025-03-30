@@ -1,18 +1,18 @@
 import PageContainer from '@/components/layout/page-container';
-import QuizViewPage from '@/features/quiz/quiz-view-page';
+import SuccessStoryViewPage from '@/features/success-story/success-story-view-page';
 
 export const metadata = {
-  title: 'Dashboard : Quiz View'
+  title: 'Dashboard : Success Story View'
 };
 
-type PageProps = { params: Promise<{ quizId: string }> };
+type PageProps = { params: Promise<{ successStoryId: string }> };
 
 export default async function Page(props: PageProps) {
   const params = await props.params;
   return (
     <PageContainer scrollable>
       <div className='flex-1 space-y-4'>
-        <QuizViewPage quizId={params.quizId} />
+        <SuccessStoryViewPage successStoryId={params.successStoryId} />
       </div>
     </PageContainer>
   );
