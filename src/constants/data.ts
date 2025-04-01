@@ -61,7 +61,7 @@ export type Video = {
   createdAt: string | Date;
   updatedAt: string | Date;
   __v: number;
-}
+};
 
 export interface SuccessStory {
   _id: string;
@@ -80,7 +80,7 @@ export type Scholarship = {
   websiteUrl: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type SuccessStoryType = {
   _id: string;
@@ -92,10 +92,9 @@ export type SuccessStoryType = {
   createdAt: string | Date;
   updatedAt: string | Date;
   __v: number;
-}
+};
 
 export type Quiz = {
-
   totalMarks: number;
   isActive: boolean;
   createdAt: string;
@@ -113,6 +112,29 @@ export type Quiz = {
     answer: number;
     isDelete?: boolean;
   }>;
+};
+
+export type QuizResult = {
+  _id: string;
+  user: string;
+  quiz: string;
+  score: number;
+  totalQuestions: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+  skippedQuestions: number;
+  createdAt: string;
+  userDetails: {
+    phoneNumber: number;
+    avatar: string;
+    email: string;
+    name: string;
+  };
+  quizDetails: {
+    title: string;
+    description: string;
+    isResultOut: boolean;
+  };
 };
 
 //Info: The following data is used for the sidebar navigation and Cmd K bar.
@@ -142,7 +164,7 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
-    title: "Video",
+    title: 'Video',
     url: '/dashboard/video',
     icon: 'video',
     shortcut: ['yt', 'yt'],
@@ -150,15 +172,15 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
-    title: "Quiz",
-    url: "/dashboard/quiz",
+    title: 'Quiz',
+    url: '/dashboard/quiz',
     icon: 'notepad-text-dashed',
     shortcut: ['qq', 'qq'],
     isActive: false,
     items: [] // No child items
   },
   {
-    title: "Success Story",
+    title: 'Success Story',
     url: '/dashboard/success-story',
     icon: 'book',
     shortcut: ['ss', 'ss'],
@@ -166,13 +188,13 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
-    title: "Scholarship",
+    title: 'Scholarship',
     url: '/dashboard/scholarships',
     icon: 'graduation-cap',
     shortcut: ['s', 's'],
     isActive: false,
     items: [] // No child items
-  },
+  }
   // {
   //   title: 'Product',
   //   url: '/dashboard/product',
