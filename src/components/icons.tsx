@@ -13,6 +13,7 @@ import {
   FileText,
   GraduationCap,
   HelpCircle,
+  Home,
   Image,
   Laptop,
   LayoutDashboardIcon,
@@ -72,6 +73,7 @@ export const Icons = {
   building: Building,
   video: Video,
   book: Book,
+  home: Home,
   'graduation-cap': GraduationCap,
   'notepad-text-dashed': NotepadText,
   gitHub: ({ ...props }: LucideProps) => (

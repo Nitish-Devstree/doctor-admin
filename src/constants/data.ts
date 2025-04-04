@@ -148,6 +148,14 @@ export const navItems: NavItem[] = [
     items: [] // Empty array as there are no child items for Dashboard
   },
   {
+    title: 'Home Page',
+    url: '/dashboard/home-page',
+    icon: 'home',
+    isActive: false,
+    shortcut: ['h', 'h'],
+    items: [] // Empty array as there are no child items for Home Page
+  },
+  {
     title: 'Users',
     url: '/dashboard/users',
     icon: 'user',
@@ -159,7 +167,7 @@ export const navItems: NavItem[] = [
     title: 'University',
     url: '/dashboard/university',
     icon: 'building',
-    shortcut: ['un', 'un'],
+    shortcut: ['s', 's'],
     isActive: false,
     items: [] // No child items
   },
@@ -167,7 +175,7 @@ export const navItems: NavItem[] = [
     title: 'Video',
     url: '/dashboard/video',
     icon: 'video',
-    shortcut: ['yt', 'yt'],
+    shortcut: ['v', 'v'],
     isActive: false,
     items: [] // No child items
   },
@@ -175,7 +183,7 @@ export const navItems: NavItem[] = [
     title: 'Quiz',
     url: '/dashboard/quiz',
     icon: 'notepad-text-dashed',
-    shortcut: ['qq', 'qq'],
+    shortcut: ['q', 'q'],
     isActive: false,
     items: [] // No child items
   },
@@ -183,7 +191,7 @@ export const navItems: NavItem[] = [
     title: 'Success Story',
     url: '/dashboard/success-story',
     icon: 'book',
-    shortcut: ['ss', 'ss'],
+    shortcut: ['g', 'g'],
     isActive: false,
     items: [] // No child items
   },
@@ -191,7 +199,7 @@ export const navItems: NavItem[] = [
     title: 'Scholarship',
     url: '/dashboard/scholarships',
     icon: 'graduation-cap',
-    shortcut: ['s', 's'],
+    shortcut: ['n', 'n'],
     isActive: false,
     items: [] // No child items
   }

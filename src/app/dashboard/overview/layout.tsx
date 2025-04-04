@@ -21,7 +21,7 @@ export default function OverViewLayout({
             Hi, Welcome back 👋
           </h2>
         </div>
-        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+        {/* <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>
@@ -121,16 +121,15 @@ export default function OverViewLayout({
               </p>
             </CardContent>
           </Card>
-        </div>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
+        </div> */}
+        {/* <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
           <div className='col-span-4'>{bar_stats}</div>
           <div className='col-span-4 md:col-span-3'>
-            {/* sales arallel routes */}
             {sales}
           </div>
           <div className='col-span-4'>{area_stats}</div>
           <div className='col-span-4 md:col-span-3'>{pie_stats}</div>
-        </div>
+        </div> */}
       </div>
     </PageContainer>
   );

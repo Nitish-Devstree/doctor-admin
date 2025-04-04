@@ -41,6 +41,11 @@ const API = {
   },
   quizResult: {
     getAll: '/result/by-quiz-and-user'
+  },
+  homePage: {
+    getAll: '/homepage',
+    update: '/homepage',
+    delete: '/homepage/delete'
   }
 };
 

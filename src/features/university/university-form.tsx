@@ -95,7 +95,10 @@ const formSchema = z.object({
       })
     )
     .optional(),
-  facilities: z.array(z.string()).optional()
+  facilities: z.array(z.string()).optional(),
+  languages: z.array(z.string()).optional(),
+  ranking: z.string().optional(),
+  numberOfStudents: z.string().optional()
 });
 
 interface UniversityFormProps {
@@ -128,6 +131,9 @@ interface UniversityFormProps {
       _id?: string;
     }>;
     facilities?: string[];
+    languages?: string[];
+    ranking?: string;
+    numberOfStudents?: string;
   } | null;
   pageTitle: string;
 }
@@ -160,7 +166,11 @@ export default function UniversityForm({
         ...course,
         fees: course.fees.toString()
       })) || [],
-    facilities: initialData?.facilities || []
+
+    facilities: initialData?.facilities || [],
+    languages: initialData?.languages || [],
+    ranking: initialData?.ranking || '',
+    numberOfStudents: initialData?.numberOfStudents || ''
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -191,6 +201,13 @@ export default function UniversityForm({
     const updatedFacilities = [...currentFacilities];
     updatedFacilities.splice(index, 1);
     form.setValue('facilities', updatedFacilities);
+  };
+
+  const removeLanguage = (index: number) => {
+    const currentLanguages = form.getValues('languages') || [];
+    const updatedLanguages = [...currentLanguages];
+    updatedLanguages.splice(index, 1);
+    form.setValue('languages', updatedLanguages);
   };
 
   //   const { mutate, isPending } = useUpdateUniversityById(
@@ -260,6 +277,20 @@ export default function UniversityForm({
       values.facilities.forEach((facility, index) => {
         formData.append(`facilities[${index}]`, facility);
       });
+    }
+
+    if (values.languages && values.languages.length > 0) {
+      values.languages.forEach((language, index) => {
+        formData.append(`languages[${index}]`, language);
+      });
+    }
+
+    if (values.ranking) {
+      formData.append('ranking', values.ranking.toString());
+    }
+
+    if (values.numberOfStudents) {
+      formData.append('numberOfStudents', values.numberOfStudents.toString());
     }
 
     if (!initialData?._id) {
@@ -583,6 +614,46 @@ export default function UniversityForm({
             </div>
 
             <div className='space-y-4'>
+              <h3 className='text-lg font-semibold'>Ranking Details</h3>
+              <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                <FormField
+                  control={form.control}
+                  name='ranking'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Ranking</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='Enter ranking of university'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='numberOfStudents'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Number of Students</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='Enter number of students'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className='space-y-4'>
               <h3 className='text-lg font-semibold'>Courses</h3>
               {form.watch('courses')?.map((_, index) => (
                 <div
@@ -735,6 +806,50 @@ export default function UniversityForm({
                 }}
               >
                 Add Facility
+              </Button>
+            </div>
+
+            <div className='space-y-4'>
+              <h3 className='text-lg font-semibold'>Languages</h3>
+              {form.watch('languages')?.map((_, index) => (
+                <div key={index} className='flex items-center gap-2'>
+                  <FormField
+                    control={form.control}
+                    name={`languages.${index}`}
+                    render={({ field }) => (
+                      <FormItem className='flex-1'>
+                        <FormLabel>Languages {index + 1}</FormLabel>
+                        <div className='flex items-center gap-2'>
+                          <FormControl>
+                            <Input
+                              placeholder='Enter languages name'
+                              {...field}
+                            />
+                          </FormControl>
+                          <Button
+                            type='button'
+                            variant='ghost'
+                            size='icon'
+                            onClick={() => removeLanguage(index)}
+                          >
+                            <Trash2 className='h-5 w-5 text-red-500' />
+                          </Button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+              <Button
+                type='button'
+                variant='outline'
+                onClick={() => {
+                  const currentLanguages = form.getValues('languages') || [];
+                  form.setValue('languages', [...currentLanguages, '']);
+                }}
+              >
+                Add Language
               </Button>
             </div>
             <Button type='submit' disabled={createPending || updatePending}>

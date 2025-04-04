@@ -8,8 +8,9 @@ import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'The Dr House Overseas',
+  description:
+    'The Dr House Overseas is a leading overseas education consultancy in India, providing expert guidance and support for students aspiring to study abroad. Our experienced consultants offer personalized services, including university selection, application assistance, visa guidance, and pre-departure support, ensuring a smooth transition for students pursuing their dreams of international education.'
 };
 
 const lato = Lato({

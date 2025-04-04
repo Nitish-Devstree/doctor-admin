@@ -28,7 +28,7 @@ export const columns: ColumnDef<Video>[] = [
     header: 'Title'
   },
   {
-    accessorKey: 'videoUrl',
+    accessorKey: 'Video Url',
     cell: ({ row }) => {
       return (
         <Link href={row.original.videoUrl} target='_blank'>

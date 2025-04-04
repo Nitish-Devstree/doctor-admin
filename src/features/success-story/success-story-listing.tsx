@@ -29,7 +29,7 @@ export default function SuccessStoryListPage() {
     <SuccessStoryTable
       columns={columns}
       data={successStoryData?.successStories || []}
-      totalItems={successStoryData?.totalCount || 0}
+      totalItems={successStoryData?.pagination?.total || 0}
     />
   );
 }

@@ -27,7 +27,7 @@ export default function ScholarshipListPage() {
     <ScholarshipTable
       columns={columns}
       data={scholarshipData?.scholarships || []}
-      totalItems={scholarshipData?.totalCount || 0}
+      totalItems={scholarshipData?.totalScholarships || 0}
     />
   );
 }
