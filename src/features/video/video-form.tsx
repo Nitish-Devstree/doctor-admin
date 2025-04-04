@@ -111,7 +111,7 @@ export default function VideoForm({ initialData, pageTitle }: VideoFormProps) {
     formData.append('videoUrl', values.videoUrl);
 
     // TODO: Replace with actual API call
-    console.log('Submitting video form:', Object.fromEntries(formData));
+    // console.log('Submitting video form:', Object.fromEntries(formData));
 
     if (!initialData?._id) {
       createMutate(formData);

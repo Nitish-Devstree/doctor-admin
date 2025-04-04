@@ -24,6 +24,9 @@ const authConfig = {
         }
       },
       async authorize(credentials, req) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new InvalidLoginError('Missing email or password');
+        }
         try {
           const response = await axios.post(
             process.env.NEXT_PUBLIC_API_ENDPOINT_URL + API.auth.login,
@@ -32,13 +35,13 @@ const authConfig = {
               password: credentials?.password
             }
           );
-          console.log(response.data, 'response.data');
+          // console.log(response.data, 'response.data');
           if (response.data.error) {
             throw new InvalidLoginError(response.data.error);
           }
 
           const user = response?.data?.data?.data;
-          console.log(user, 'usersss');
+          // console.log(user, 'usersss');
           if (user) {
             return {
               id: user._id,
@@ -51,7 +54,7 @@ const authConfig = {
             return null;
           }
         } catch (e: any) {
-          console.log(e, 'error');
+          // console.log(e, 'error');
           throw new InvalidLoginError(e.response?.data?.message);
         }
       }
@@ -59,7 +62,7 @@ const authConfig = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log(user, 'useruseruseruser');
+      // console.log(user, 'useruseruseruser');
       if (user) {
         token.accessToken = user.accessToken;
         token.name = user.name;
@@ -69,13 +72,17 @@ const authConfig = {
       return token;
     },
     async session({ session, token }) {
-      console.log(token, 'tokentoken');
-      if (token) {
-        session.user.accessToken = token.accessToken;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.id = token.id;
-      }
+      const typedToken = token as {
+        id: string;
+        name: string;
+        email: string;
+        accessToken: string;
+      };
+
+      session.user.id = typedToken.id;
+      session.user.accessToken = typedToken.accessToken;
+      session.user.name = typedToken.name;
+      session.user.email = typedToken.email;
 
       return session;
     }

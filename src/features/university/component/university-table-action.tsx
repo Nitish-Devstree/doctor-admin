@@ -7,6 +7,16 @@ import { useGetActiveCountries } from '@/hook-api/country/country.hook';
 import Image from 'next/image';
 import { useUniversityTableFilters } from './use-university-table-filters';
 
+type Country = {
+  _id: string;
+  name: string;
+  image: string;
+};
+
+type CountryData = {
+  country: Country;
+};
+
 export default function UniversityTableAction() {
   const {
     countryFilter,
@@ -21,7 +31,7 @@ export default function UniversityTableAction() {
   const { data: countriesData } = useGetActiveCountries();
 
   const countryOptions =
-    countriesData?.map((item) => ({
+    countriesData?.map((item: CountryData) => ({
       label: (
         <div className='flex items-center gap-2'>
           <div className='relative h-4 w-6 overflow-hidden rounded'>

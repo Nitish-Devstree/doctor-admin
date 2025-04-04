@@ -1,19 +1,22 @@
 'use client';
+
 import FormCardSkeleton from '@/components/form-card-skeleton';
-import { University } from '@/constants/data';
 import { useGetUniversityById } from '@/hook-api/university/university.hook';
 import { notFound } from 'next/navigation';
 import UniversityForm from './university-form';
+import { University } from '@/types/university';
 
-type TUserniversityViewPageProps = {
-  universityId: string;
-};
+interface UniversityViewPageProps {
+  params: {
+    universityId: string;
+  };
+}
 
-export default function UserniversityViewPage({
-  universityId
-}: TUserniversityViewPageProps) {
-  let university = null;
-  let pageTitle = 'Create New University';
+export default function UniversityViewPage({
+  params: { universityId }
+}: UniversityViewPageProps) {
+  let pageTitle = 'Create University';
+  let university: University | null = null;
 
   const {
     data: universityData,
@@ -21,15 +24,17 @@ export default function UserniversityViewPage({
     error
   } = useGetUniversityById(universityId);
 
-  console.log(universityData, 'universityData');
+  // console.log(universityData, 'universityData');
   if (isLoading) {
     return <FormCardSkeleton />;
   }
   if (universityId !== 'new') {
-    university = universityData?.university as University;
+    university = universityData?.university;
     if (error) {
       notFound();
     }
+    // Transform the data to match the expected format
+
     pageTitle = `Edit University`;
   }
 

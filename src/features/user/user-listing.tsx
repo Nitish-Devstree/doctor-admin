@@ -1,23 +1,11 @@
 'use client';
-import { useGetAllUsers } from '../../hook-api/user/user.hook';
-import { useQueryState } from 'nuqs';
-import React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { DataTable as UserTable } from '../../components/ui/table/data-table';
 import { DataTableSkeleton } from '../../components/ui/table/data-table-skeleton';
+import { useGetAllUsers } from '../../hook-api/user/user.hook';
 import { columns } from './component/columns';
-import { useSearchParams } from 'next/navigation';
 
-interface UserListingClientProps {
-  initialPage?: number;
-  initialSearch?: string;
-  initialLimit?: number;
-}
-
-const UserListingClient = ({
-  initialPage,
-  initialSearch,
-  initialLimit
-}: UserListingClientProps) => {
+const UserListingClient = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page') ?? 1;
   const search = searchParams.get('q');

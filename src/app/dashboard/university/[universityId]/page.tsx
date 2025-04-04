@@ -1,5 +1,5 @@
 import PageContainer from '@/components/layout/page-container';
-import UserniversityViewPage from '@/features/university/univsersity-view-page';
+import UniversityViewPage from '@/features/university/univsersity-view-page';
 
 export const metadata = {
   title: 'Dashboard : University View'
@@ -12,7 +12,7 @@ export default async function Page(props: PageProps) {
   return (
     <PageContainer scrollable>
       <div className='flex-1 space-y-4'>
-        <UserniversityViewPage universityId={params.universityId} />
+        <UniversityViewPage params={params} />
       </div>
     </PageContainer>
   );

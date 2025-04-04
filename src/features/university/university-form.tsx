@@ -142,7 +142,7 @@ export default function UniversityForm({
   initialData,
   pageTitle
 }: UniversityFormProps) {
-  console.log(initialData, 'initialData?._id');
+  // console.log(initialData, 'initialData?._id');
   const router = useRouter();
   const defaultValues = {
     name: initialData?.name || '',
@@ -228,7 +228,7 @@ export default function UniversityForm({
   );
   function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
-    console.log(values, 'values');
+    // console.log(values, 'values');
     // Handle image if it exists
     if (
       values.image &&
@@ -266,9 +266,6 @@ export default function UniversityForm({
         formData.append(`courses[${index}].degree`, course.degree);
         formData.append(`courses[${index}].description`, course.description);
         formData.append(`courses[${index}].fees`, course.fees);
-        if (course._id) {
-          formData.append(`courses[${index}]._id`, course._id);
-        }
       });
     }
 
@@ -472,7 +469,7 @@ export default function UniversityForm({
                                         countryJson.find(
                                           (country) =>
                                             country.name === field.value
-                                        ).image
+                                        )?.image || ''
                                       }
                                       alt={field.value}
                                       fill

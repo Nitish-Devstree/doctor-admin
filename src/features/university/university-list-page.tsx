@@ -23,7 +23,7 @@ export default function UniversityListPage() {
   };
 
   const { data: universitiesData, isLoading } = useGetUniversities(filters);
-  console.log(universitiesData, 'universitiesData');
+  // console.log(universitiesData, 'universitiesData');
   if (isLoading) {
     return <DataTableSkeleton columnCount={6} rowCount={10} />;
   }

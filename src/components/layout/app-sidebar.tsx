@@ -8,7 +8,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -32,18 +31,14 @@ import {
 } from '@/components/ui/sidebar';
 import { navItems } from '@/constants/data';
 import {
-  BadgeCheck,
-  Bell,
   ChevronRight,
   ChevronsUpDown,
-  CreditCard,
   GalleryVerticalEnd,
   LogOut
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import * as React from 'react';
 import { Icons } from '../icons';
 
 export const company = {
@@ -66,7 +61,6 @@ export default function AppSidebar() {
           </div>
           <div className='grid flex-1 text-left text-sm leading-tight'>
             <span className='truncate font-semibold'>{company.name}</span>
-            <span className='truncate text-xs'>{company.plan}</span>
           </div>
         </div>
       </SidebarHeader>

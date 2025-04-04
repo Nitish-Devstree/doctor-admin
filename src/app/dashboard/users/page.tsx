@@ -5,21 +5,10 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { SearchParams } from 'nuqs/server';
 import UserListingClient from '@/features/user/user-listing';
 import UserTableAction from '@/features/user/component/user-table-action';
 
-interface PageProps {
-  searchParams: SearchParams;
-}
-
-export default async function Page({ searchParams }: PageProps) {
-  const page = Number(searchParams.page) || 1;
-  const search = Array.isArray(searchParams.q)
-    ? searchParams.q[0]
-    : searchParams.q || '';
-  const limit = (await Number(searchParams.limit)) || 10;
-
+export default async function Page() {
   return (
     <PageContainer scrollable={false}>
       <div className='flex flex-1 flex-col space-y-4'>
@@ -34,11 +23,7 @@ export default async function Page({ searchParams }: PageProps) {
         </div>
         <Separator />
         <UserTableAction />
-        <UserListingClient
-          initialPage={page}
-          initialSearch={search}
-          initialLimit={limit}
-        />
+        <UserListingClient />
       </div>
     </PageContainer>
   );

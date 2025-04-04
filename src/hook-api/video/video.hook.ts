@@ -33,7 +33,7 @@ export const useCreateVideo = (resetForm: Function) => {
       toast.success(data.message);
     },
     onError: (data) => {
-      console.log(data);
+      // console.log(data);
       toast.error(JSON.stringify(data.message));
     }
   });
@@ -50,7 +50,7 @@ export const useUpdateVideo = (id: string | undefined, resetForm: Function) => {
       toast.success(data.message);
     },
     onError: (data) => {
-      console.log(data);
+      // console.log(data);
       toast.error(JSON.stringify(data.message));
     }
   });
@@ -66,7 +66,7 @@ export function useDeleteVideo(onSuccess: Function) {
       toast.success(data.message);
     },
     onError: (data) => {
-      console.log(data);
+      // console.log(data);
       toast.error(JSON.stringify(data.message));
     }
   });

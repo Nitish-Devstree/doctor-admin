@@ -17,7 +17,10 @@ export const useGetUserById = (id: string | null) => {
   });
 };
 
-export const useUpdateUserById = (id: string | undefined, resetForm) => {
+export const useUpdateUserById = (
+  id: string | undefined,
+  resetForm: Function
+) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: FormData) => updateUserByIdApi(id, data),
@@ -27,7 +30,7 @@ export const useUpdateUserById = (id: string | undefined, resetForm) => {
       toast.success(data.message);
     },
     onError: (data) => {
-      console.log(data);
+      // console.log(data);
       toast.error(JSON.stringify(data.message));
     }
   });
