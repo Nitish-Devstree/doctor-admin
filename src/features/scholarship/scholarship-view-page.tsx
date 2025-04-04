@@ -10,11 +10,17 @@ type TProductViewPageProps = {
   scholarshipId: string;
 };
 
-export default function ScholarshipViewPage({ scholarshipId }: TProductViewPageProps) {
+export default function ScholarshipViewPage({
+  scholarshipId
+}: TProductViewPageProps) {
   let scholarship = null;
   let pageTitle = 'Create New scholarship';
 
-  const { data: scholarshipData, isLoading, error } = useGetScholarshipById(scholarshipId);
+  const {
+    data: scholarshipData,
+    isLoading,
+    error
+  } = useGetScholarshipById(scholarshipId);
   if (isLoading) {
     return <FormCardSkeleton />;
   }

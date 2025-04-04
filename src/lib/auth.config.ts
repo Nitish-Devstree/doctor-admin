@@ -4,11 +4,11 @@ import { CredentialsSignin, NextAuthConfig } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 
 class InvalidLoginError extends CredentialsSignin {
-  code: string
+  code: string;
 
   constructor(message: string) {
-    super()
-    this.code = message
+    super();
+    this.code = message;
   }
 }
 
@@ -25,19 +25,21 @@ const authConfig = {
       },
       async authorize(credentials, req) {
         try {
-          const response = await axios.post(process.env.NEXT_PUBLIC_API_ENDPOINT_URL + API.auth.login, {
-            email: credentials?.email,
-            password: credentials?.password,
-          });
-          console.log(response.data, 'response.data')
+          const response = await axios.post(
+            process.env.NEXT_PUBLIC_API_ENDPOINT_URL + API.auth.login,
+            {
+              email: credentials?.email,
+              password: credentials?.password
+            }
+          );
+          console.log(response.data, 'response.data');
           if (response.data.error) {
             throw new InvalidLoginError(response.data.error);
           }
 
           const user = response?.data?.data?.data;
-          console.log(user, 'usersss')
+          console.log(user, 'usersss');
           if (user) {
-
             return {
               id: user._id,
               name: user.username,
@@ -45,12 +47,11 @@ const authConfig = {
 
               accessToken: response.data.data.accessToken
             };
-
           } else {
             return null;
           }
         } catch (e: any) {
-          console.log(e, 'error')
+          console.log(e, 'error');
           throw new InvalidLoginError(e.response?.data?.message);
         }
       }
@@ -58,7 +59,7 @@ const authConfig = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log(user, 'useruseruseruser')
+      console.log(user, 'useruseruseruser');
       if (user) {
         token.accessToken = user.accessToken;
         token.name = user.name;
@@ -68,7 +69,7 @@ const authConfig = {
       return token;
     },
     async session({ session, token }) {
-      console.log(token, 'tokentoken')
+      console.log(token, 'tokentoken');
       if (token) {
         session.user.accessToken = token.accessToken;
         session.user.name = token.name;

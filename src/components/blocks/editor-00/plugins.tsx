@@ -14,13 +14,13 @@ export function Plugins() {
   };
 
   return (
-    <div className="relative">
+    <div className='relative'>
       {/* toolbar plugins */}
-      <div className="relative">
+      <div className='relative'>
         <RichTextPlugin
           contentEditable={
-            <div className="">
-              <div className="" ref={onRef}>
+            <div className=''>
+              <div className='' ref={onRef}>
                 <ContentEditable placeholder={'Start typing ...'} />
               </div>
             </div>

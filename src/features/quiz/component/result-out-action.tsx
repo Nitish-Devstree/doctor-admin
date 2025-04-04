@@ -9,13 +9,17 @@ interface ResultOutActionProps {
 }
 
 export const ResultOutAction: React.FC<ResultOutActionProps> = ({ data }) => {
-  const { mutate: toggleStatus, isPending: isToggling } = useToggleQuizStatus(data._id);
+  const { mutate: toggleStatus, isPending: isToggling } = useToggleQuizStatus(
+    data._id
+  );
 
   return (
     <Switch
       checked={data.isResultOut}
       disabled={isToggling}
-      onCheckedChange={() => toggleStatus({isResultOut: data.isResultOut?0:1})}
+      onCheckedChange={() =>
+        toggleStatus({ isResultOut: data.isResultOut ? 0 : 1 })
+      }
     />
   );
 };

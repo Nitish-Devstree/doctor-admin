@@ -1,6 +1,6 @@
-import { EditorThemeClasses } from 'lexical'
+import { EditorThemeClasses } from 'lexical';
 
-import './editor-theme.css'
+import './editor-theme.css';
 
 export const editorTheme: EditorThemeClasses = {
   ltr: 'text-left',
@@ -11,7 +11,7 @@ export const editorTheme: EditorThemeClasses = {
     h3: 'scroll-m-20 text-2xl font-semibold tracking-tight',
     h4: 'scroll-m-20 text-xl font-semibold tracking-tight',
     h5: 'scroll-m-20 text-lg font-semibold tracking-tight',
-    h6: 'scroll-m-20 text-base font-semibold tracking-tight',
+    h6: 'scroll-m-20 text-base font-semibold tracking-tight'
   },
   paragraph: 'leading-7 [&:not(:first-child)]:mt-6',
   quote: 'mt-6 border-l-2 pl-6 italic',
@@ -24,7 +24,7 @@ export const editorTheme: EditorThemeClasses = {
     listitemUnchecked:
       'relative mx-2 px-6 list-none outline-none before:content-[""] before:w-4 before:h-4 before:top-0.5 before:left-0 before:cursor-pointer before:block before:bg-cover before:absolute before:border before:border-primary before:rounded',
     nested: {
-      listitem: 'list-none before:hidden after:hidden',
+      listitem: 'list-none before:hidden after:hidden'
     },
     ol: 'my-6 ml-6 list-decimal [&>li]:mt-2',
     olDepth: [
@@ -32,9 +32,9 @@ export const editorTheme: EditorThemeClasses = {
       'list-outside !list-[upper-roman]',
       'list-outside !list-[lower-roman]',
       'list-outside !list-[upper-alpha]',
-      'list-outside !list-[lower-alpha]',
+      'list-outside !list-[lower-alpha]'
     ],
-    ul: 'm-0 p-0 list-outside',
+    ul: 'm-0 p-0 list-outside'
   },
   hashtag: 'text-blue-600 bg-blue-100 rounded-md px-1',
   text: {
@@ -45,7 +45,7 @@ export const editorTheme: EditorThemeClasses = {
     subscript: 'sub',
     superscript: 'sup',
     underline: 'underline',
-    underlineStrikethrough: 'underline line-through',
+    underlineStrikethrough: 'underline line-through'
   },
   image: 'relative inline-block user-select-none cursor-default editor-image',
   inlineImage:
@@ -82,7 +82,7 @@ export const editorTheme: EditorThemeClasses = {
     symbol: 'EditorTheme__tokenProperty',
     tag: 'EditorTheme__tokenProperty',
     url: 'EditorTheme__tokenOperator',
-    variable: 'EditorTheme__tokenVariable',
+    variable: 'EditorTheme__tokenVariable'
   },
   characterLimit: '!bg-destructive/50',
   table: 'EditorTheme__table w-fit overflow-scroll border-collapse',
@@ -114,10 +114,10 @@ export const editorTheme: EditorThemeClasses = {
   blockCursor: '',
   embedBlock: {
     base: 'user-select-none',
-    focus: 'ring-2 ring-primary ring-offset-2',
+    focus: 'ring-2 ring-primary ring-offset-2'
   },
   hr: 'p-0.5 border-none my-1 mx-0 cursor-pointer after:content-[""] after:block after:h-0.5 after:bg-muted selected:ring-2 selected:ring-primary selected:ring-offset-2 selected:user-select-none',
   indent: '[--lexical-indent-base-value:40px]',
   mark: '',
-  markOverlap: '',
-}
+  markOverlap: ''
+};

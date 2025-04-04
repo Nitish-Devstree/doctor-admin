@@ -16,7 +16,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Loader2 } from 'lucide-react';
-import { useCreateScholarship, useUpdateScholarship } from '@/hook-api/scholarship/scholarship.hook';
+import {
+  useCreateScholarship,
+  useUpdateScholarship
+} from '@/hook-api/scholarship/scholarship.hook';
 import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
@@ -35,7 +38,10 @@ interface ScholarshipFormProps {
   pageTitle: string;
 }
 
-export default function ScholarshipForm({ initialData, pageTitle }: ScholarshipFormProps) {
+export default function ScholarshipForm({
+  initialData,
+  pageTitle
+}: ScholarshipFormProps) {
   const defaultValues = {
     title: initialData?.title || '',
     description: initialData?.description || '',
@@ -57,10 +63,8 @@ export default function ScholarshipForm({ initialData, pageTitle }: ScholarshipF
   const { mutate: createMutate, isPending: createPending } =
     useCreateScholarship(resetForm);
 
-  const { mutate: updateMutate, isPending: updatePending } = useUpdateScholarship(
-    initialData?._id,
-    resetForm
-  );
+  const { mutate: updateMutate, isPending: updatePending } =
+    useUpdateScholarship(initialData?._id, resetForm);
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const formData = new FormData();

@@ -9,11 +9,17 @@ type TProductViewPageProps = {
   successStoryId: string;
 };
 
-export default function SuccessStoryViewPage({ successStoryId }: TProductViewPageProps) {
+export default function SuccessStoryViewPage({
+  successStoryId
+}: TProductViewPageProps) {
   let successStory = null;
   let pageTitle = 'Create New success story';
 
-  const { data: successStoryData, isLoading, error } = useGetSuccessStoryById(successStoryId);
+  const {
+    data: successStoryData,
+    isLoading,
+    error
+  } = useGetSuccessStoryById(successStoryId);
   if (isLoading) {
     return <FormCardSkeleton />;
   }

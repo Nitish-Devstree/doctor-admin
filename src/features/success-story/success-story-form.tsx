@@ -18,7 +18,10 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Loader2 } from 'lucide-react';
-import { useCreateSuccessStory, useUpdateSuccessStory } from '@/hook-api/success-story/success-story.hook';
+import {
+  useCreateSuccessStory,
+  useUpdateSuccessStory
+} from '@/hook-api/success-story/success-story.hook';
 import { useRouter } from 'next/navigation';
 
 const MAX_FILE_SIZE = 5000000;
@@ -60,7 +63,10 @@ interface SuccessStoryFormProps {
   pageTitle: string;
 }
 
-export default function SuccessStoryForm({ initialData, pageTitle }: SuccessStoryFormProps) {
+export default function SuccessStoryForm({
+  initialData,
+  pageTitle
+}: SuccessStoryFormProps) {
   const defaultValues = {
     title: initialData?.title || '',
     description: initialData?.description || '',
@@ -86,10 +92,8 @@ export default function SuccessStoryForm({ initialData, pageTitle }: SuccessStor
   const { mutate: createMutate, isPending: createPending } =
     useCreateSuccessStory(resetForm);
 
-  const { mutate: updateMutate, isPending: updatePending } = useUpdateSuccessStory(
-    initialData?._id,
-    resetForm
-  );
+  const { mutate: updateMutate, isPending: updatePending } =
+    useUpdateSuccessStory(initialData?._id, resetForm);
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const formData = new FormData();

@@ -16,14 +16,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { useCreateQuiz, useUpdateQuiz } from '@/hook-api/quiz/quiz.hook';
 import { useRouter } from 'next/navigation';
 
 const questionSchema = z.object({
   _id: z.string().optional(),
   question: z.string().min(1, { message: 'Question is required' }),
-  options: z.array(z.string()).min(2, { message: 'At least 2 options are required' }),
+  options: z
+    .array(z.string())
+    .min(2, { message: 'At least 2 options are required' }),
   answer: z.number().min(0).max(3),
   isDelete: z.boolean().optional()
 });
@@ -31,8 +39,12 @@ const questionSchema = z.object({
 const formSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
   description: z.string().min(1, { message: 'Description is required' }),
-  timeLimit: z.number().min(1, { message: 'Time limit must be at least 1 minute' }),
-  questions: z.array(questionSchema).min(1, { message: 'At least one question is required' })
+  timeLimit: z
+    .number()
+    .min(1, { message: 'Time limit must be at least 1 minute' }),
+  questions: z
+    .array(questionSchema)
+    .min(1, { message: 'At least one question is required' })
 });
 
 interface QuizFormProps {
@@ -71,42 +83,47 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
     defaultValues
   });
 
-
-  const router = useRouter()
+  const router = useRouter();
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'questions'
   });
 
-  const resetForm = ()=>{
+  const resetForm = () => {
     form.reset();
-    router.push('/dashboard/quiz')
-  }
+    router.push('/dashboard/quiz');
+  };
 
-  const { mutate: createQuiz, isPending: createLoading } = useCreateQuiz(resetForm);
-  const { mutate: updateQuiz, isPending: updateLoading } = useUpdateQuiz(initialData?._id,resetForm);
+  const { mutate: createQuiz, isPending: createLoading } =
+    useCreateQuiz(resetForm);
+  const { mutate: updateQuiz, isPending: updateLoading } = useUpdateQuiz(
+    initialData?._id,
+    resetForm
+  );
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    if(initialData?._id) {
+    if (initialData?._id) {
       // Find removed questions that have IDs and mark them for deletion
       const originalQuestions = initialData.questions || [];
-      const currentQuestionIds = new Set(values.questions.map(q => q._id).filter(Boolean));
-      
+      const currentQuestionIds = new Set(
+        values.questions.map((q) => q._id).filter(Boolean)
+      );
+
       const deletedQuestions = originalQuestions
-        .filter(q => q._id && !currentQuestionIds.has(q._id))
-        .map(q => ({ ...q, isDelete: true }));
+        .filter((q) => q._id && !currentQuestionIds.has(q._id))
+        .map((q) => ({ ...q, isDelete: true }));
 
       // Combine current questions with deleted ones
       const updatedValues = {
         ...values,
         questions: [...values.questions, ...deletedQuestions]
       };
-    //   console.log(updatedValues,'updatedValues')
+      //   console.log(updatedValues,'updatedValues')
       updateQuiz(updatedValues);
     } else {
       createQuiz(values);
-    } 
+    }
   };
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
@@ -122,7 +139,10 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className='space-y-8'
+          >
             <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
               <FormField
                 control={form.control}
@@ -197,8 +217,10 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
 
               {fields.map((field, index) => (
                 <Card key={field.id} className='p-4'>
-                  <div className='flex justify-between mb-4'>
-                    <h4 className='text-md font-medium'>Question {index + 1}</h4>
+                  <div className='mb-4 flex justify-between'>
+                    <h4 className='text-md font-medium'>
+                      Question {index + 1}
+                    </h4>
                     {fields.length > 1 && (
                       <Button
                         type='button'
@@ -225,23 +247,26 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
                         </FormItem>
                       )}
                     />
-  <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
-                    {[0, 1, 2, 3].map((optionIndex) => (
-                      <FormField
-                        key={optionIndex}
-                        control={form.control}
-                        name={`questions.${index}.options.${optionIndex}`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Option {optionIndex + 1}</FormLabel>
-                            <FormControl>
-                              <Input placeholder={`Enter option ${optionIndex + 1}`} {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    ))}
+                    <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                      {[0, 1, 2, 3].map((optionIndex) => (
+                        <FormField
+                          key={optionIndex}
+                          control={form.control}
+                          name={`questions.${index}.options.${optionIndex}`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Option {optionIndex + 1}</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder={`Enter option ${optionIndex + 1}`}
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      ))}
                     </div>
 
                     <FormField
@@ -251,7 +276,9 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
                         <FormItem>
                           <FormLabel>Correct Answer</FormLabel>
                           <Select
-                            onValueChange={(value) => field.onChange(Number(value))}
+                            onValueChange={(value) =>
+                              field.onChange(Number(value))
+                            }
                             defaultValue={field.value.toString()}
                           >
                             <FormControl>
@@ -280,7 +307,10 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
             </div>
 
             <Button type='submit' disabled={createLoading || updateLoading}>
-              {createLoading || updateLoading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+              {createLoading ||
+                (updateLoading && (
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                ))}
               {initialData ? 'Update Quiz' : 'Create Quiz'}
             </Button>
           </form>

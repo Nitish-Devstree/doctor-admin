@@ -25,7 +25,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     setOpen(false);
   };
 
-  const { mutate: deleteQuiz, isPending: deleteLoading } = useDeleteQuiz(data._id, closeForm);
+  const { mutate: deleteQuiz, isPending: deleteLoading } = useDeleteQuiz(
+    data._id,
+    closeForm
+  );
 
   const onConfirm = async () => {
     deleteQuiz();

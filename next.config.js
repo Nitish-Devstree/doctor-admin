@@ -14,8 +14,8 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: "res.cloudinary.com",
-        port: ""
+        hostname: 'res.cloudinary.com',
+        port: ''
       }
     ],
     unoptimized: true
