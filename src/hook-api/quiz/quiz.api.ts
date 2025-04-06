@@ -4,7 +4,7 @@ import { paramsToQueryString } from '@/lib/utils';
 
 export async function getALlQuizApi(params: Record<string, any>) {
   const queryString = paramsToQueryString(params);
-  const response = await instance.get(API.quiz.all + queryString);
+  const response = await instance.get(API.quiz.get + queryString);
   return response.data.data;
 }
 

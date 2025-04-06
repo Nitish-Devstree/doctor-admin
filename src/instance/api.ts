@@ -37,7 +37,8 @@ const API = {
     delete: '/scholarships'
   },
   quiz: {
-    all: '/quiz'
+    all: '/quiz',
+    get: '/quiz/admin/quiz'
   },
   quizResult: {
     getAll: '/result/by-quiz-and-user'

@@ -198,21 +198,6 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
             <div className='space-y-4'>
               <div className='flex items-center justify-between'>
                 <h3 className='text-lg font-medium'>Questions</h3>
-                <Button
-                  type='button'
-                  variant='outline'
-                  size='sm'
-                  onClick={() =>
-                    append({
-                      question: '',
-                      options: ['', '', '', ''],
-                      answer: 0
-                    })
-                  }
-                >
-                  <Plus className='mr-2 h-4 w-4' />
-                  Add Question
-                </Button>
               </div>
 
               {fields.map((field, index) => (
@@ -304,6 +289,21 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
                   </div>
                 </Card>
               ))}
+              <Button
+                type='button'
+                variant='outline'
+                size='sm'
+                onClick={() =>
+                  append({
+                    question: '',
+                    options: ['', '', '', ''],
+                    answer: 0
+                  })
+                }
+              >
+                <Plus className='mr-2 h-4 w-4' />
+                Add Question
+              </Button>
             </div>
 
             <Button type='submit' disabled={createLoading || updateLoading}>
