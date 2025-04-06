@@ -48,7 +48,7 @@ const formSchema = z.object({
   questionsPerAttempt: z
     .number()
     .min(1, { message: 'Questions per attempt must be at least 1' })
-    .max(100, { message: 'Questions per attempt cannot exceed 100' }),
+    .max(180, { message: 'Questions per attempt cannot exceed 180' }),
   questions: z
     .array(questionSchema)
     .min(1, { message: 'At least one question is required' })

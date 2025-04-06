@@ -100,6 +100,7 @@ export type Quiz = {
   createdAt: string;
   updatedAt: string;
   questionCount: number;
+  questionsPerAttempt: number;
   _id?: string;
   title: string;
   description: string;
