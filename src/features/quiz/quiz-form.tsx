@@ -11,11 +11,12 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { FileInput } from '@/components/ui/file-input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Loader2, Plus, Trash2 } from 'lucide-react';
+import { AlertCircle, Loader2, Plus, Trash2 } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -25,6 +26,8 @@ import {
 } from '@/components/ui/select';
 import { useCreateQuiz, useUpdateQuiz } from '@/hook-api/quiz/quiz.hook';
 import { useRouter } from 'next/navigation';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useState } from 'react';
 
 const questionSchema = z.object({
   _id: z.string().optional(),
@@ -42,6 +45,10 @@ const formSchema = z.object({
   timeLimit: z
     .number()
     .min(1, { message: 'Time limit must be at least 1 minute' }),
+  questionsPerAttempt: z
+    .number()
+    .min(1, { message: 'Questions per attempt must be at least 1' })
+    .max(100, { message: 'Questions per attempt cannot exceed 100' }),
   questions: z
     .array(questionSchema)
     .min(1, { message: 'At least one question is required' })
@@ -53,6 +60,7 @@ interface QuizFormProps {
     title: string;
     description: string;
     timeLimit: number;
+    questionsPerAttempt: number;
     questions: Array<{
       _id?: string;
       question: string;
@@ -65,10 +73,13 @@ interface QuizFormProps {
 }
 
 export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
+  const [csvError, setCsvError] = useState<string | null>(null);
+
   const defaultValues = {
     title: initialData?.title || '',
     description: initialData?.description || '',
     timeLimit: initialData?.timeLimit || 30,
+    questionsPerAttempt: initialData?.questionsPerAttempt || 10,
     questions: initialData?.questions || [
       {
         question: '',
@@ -85,7 +96,7 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
 
   const router = useRouter();
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control: form.control,
     name: 'questions'
   });
@@ -95,12 +106,72 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
     router.push('/dashboard/quiz');
   };
 
-  const { mutate: createQuiz, isPending: createLoading } =
-    useCreateQuiz(resetForm);
+  const { mutate: createQuiz, isPending: createLoading } = useCreateQuiz(resetForm);
   const { mutate: updateQuiz, isPending: updateLoading } = useUpdateQuiz(
     initialData?._id,
     resetForm
   );
+
+  const handleCSVUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCsvError(null);
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const text = e.target?.result as string;
+      const lines = text.split('\n');
+      
+      // Check headers
+      const headers = lines[0].toLowerCase().trim().split(',');
+      const expectedHeaders = ['question', 'option1', 'option2', 'option3', 'option4', 'answer'];
+      const isHeadersValid = expectedHeaders.every(header => headers.includes(header));
+      
+      if (!isHeadersValid) {
+        setCsvError('Invalid CSV format. Required headers: question, option1, option2, option3, option4, answer');
+        return;
+      }
+
+      // Parse questions
+      const questions = [];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        
+        const values = lines[i].split(',').map(val => val.trim());
+        if (values.length !== 6) {
+          setCsvError(`Invalid data in row ${i}. Each row must have 6 columns.`);
+          return;
+        }
+
+        const [question, opt1, opt2, opt3, opt4, answer] = values;
+        if (!question || !opt1 || !opt2 || !opt3 || !opt4 || !answer) {
+          setCsvError(`Missing data in row ${i}. All fields are required.`);
+          return;
+        }
+
+        const answerNum = parseInt(answer);
+        if (isNaN(answerNum) || answerNum < 1 || answerNum > 4) {
+          setCsvError(`Invalid answer in row ${i}. Answer must be a number between 1 and 4.`);
+          return;
+        }
+
+        questions.push({
+          question,
+          options: [opt1, opt2, opt3, opt4],
+          answer: answerNum - 1 // Convert 1-based to 0-based index
+        });
+      }
+
+      if (questions.length === 0) {
+        setCsvError('No valid questions found in the CSV file.');
+        return;
+      }
+
+      replace(questions);
+    };
+
+    reader.readAsText(file);
+  };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (initialData?._id) {
@@ -139,10 +210,7 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className='space-y-8'
-          >
+          <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>
             <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
               <FormField
                 control={form.control}
@@ -175,6 +243,24 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name='questionsPerAttempt'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Questions Per Attempt</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        placeholder='Enter questions per attempt'
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             <FormField
@@ -198,7 +284,27 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
             <div className='space-y-4'>
               <div className='flex items-center justify-between'>
                 <h3 className='text-lg font-medium'>Questions</h3>
+                <div className='flex gap-2'>
+                  <FormItem className="max-w-[300px]">
+                    <FormLabel>Import Questions (CSV)</FormLabel>
+                    <FormControl>
+                      <FileInput
+                        accept=".csv"
+                        onChange={handleCSVUpload}
+                      />
+                    </FormControl>
+                  </FormItem>
+                 
+                </div>
               </div>
+
+              {csvError && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{csvError}</AlertDescription>
+                </Alert>
+              )}
 
               {fields.map((field, index) => (
                 <Card key={field.id} className='p-4'>
@@ -289,21 +395,19 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
                   </div>
                 </Card>
               ))}
-              <Button
-                type='button'
-                variant='outline'
-                size='sm'
-                onClick={() =>
-                  append({
-                    question: '',
-                    options: ['', '', '', ''],
-                    answer: 0
-                  })
-                }
-              >
-                <Plus className='mr-2 h-4 w-4' />
-                Add Question
-              </Button>
+               <Button
+                    type='button'
+                    variant='outline'
+                    size='sm'
+                    onClick={() => append({
+                      question: '',
+                      options: ['', '', '', ''],
+                      answer: 0
+                    })}
+                  >
+                    <Plus className='mr-2 h-4 w-4' />
+                    Add Question
+                  </Button>
             </div>
 
             <Button type='submit' disabled={createLoading || updateLoading}>

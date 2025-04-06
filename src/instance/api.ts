@@ -38,6 +38,7 @@ const API = {
   },
   quiz: {
     all: '/quiz',
+    getById:'/quiz/admin/get-by-id',
     get: '/quiz/admin/quiz'
   },
   quizResult: {

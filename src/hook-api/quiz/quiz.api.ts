@@ -14,7 +14,7 @@ export async function createQuizApi(payload: FormData) {
 }
 
 export async function getQuizByIdApi(id: string) {
-  const response = await instance.get(API.quiz.all + '/' + id);
+  const response = await instance.get(API.quiz.getById + '/' + id);
   return response.data.data;
 }
 
