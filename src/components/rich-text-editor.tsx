@@ -35,6 +35,10 @@ import {
 import Link from '@tiptap/extension-link';
 import { cn } from '@/lib/utils';
 import Placeholder from '@tiptap/extension-placeholder';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
 import './rich-text-editor.css';
 import {
   FontBoldIcon,
@@ -73,7 +77,13 @@ export function RichTextEditor({
       }),
       Superscript,
       SubScript,
-      Placeholder.configure({ placeholder })
+      Placeholder.configure({ placeholder }),
+      Table.configure({
+        resizable: true
+      }),
+      TableRow,
+      TableHeader,
+      TableCell
     ],
     content: value,
     onUpdate: ({ editor }) => {
