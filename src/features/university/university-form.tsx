@@ -54,7 +54,7 @@ const ACCEPTED_IMAGE_TYPES = [
 const formSchema = z.object({
   image: z
     .any()
-    .optional()
+    .refine((files) => files?.length > 0, 'Image is required')
     .refine(
       (files) =>
         !files || files?.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE,

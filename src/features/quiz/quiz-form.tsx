@@ -52,9 +52,7 @@ const formSchema = z
   .object({
     title: z.string().min(1, { message: 'Title is required' }),
     description: z.string().min(1, { message: 'Description is required' }),
-    timeLimit: z
-      .number()
-      .min(1, { message: 'Time limit must be at least 1 minute' }),
+    timeLimit: z.number(),
     quizStartDatetime: z.date({
       required_error: 'Start date and time is required.'
     }),
@@ -100,7 +98,7 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
   const defaultValues = {
     title: initialData?.title || '',
     description: initialData?.description || '',
-    timeLimit: initialData?.timeLimit || 30,
+    timeLimit: initialData?.timeLimit || 0,
     questionsPerAttempt: initialData?.questionsPerAttempt || 10,
     questions: initialData?.questions || [
       {
@@ -251,8 +249,10 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
     if (date) {
       if (type === 'start') {
         form.setValue('quizStartDatetime', date);
+        updateTimeLimit();
       } else {
         form.setValue('quizEndDatetime', date);
+        updateTimeLimit();
       }
     }
   }
@@ -281,6 +281,7 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
       }
 
       form.setValue('quizEndDatetime', newDate);
+      updateTimeLimit();
     } else {
       const currentDate = form.getValues('quizStartDatetime') || new Date();
       let newDate = new Date(currentDate);
@@ -300,8 +301,21 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
       }
 
       form.setValue('quizStartDatetime', newDate);
+      updateTimeLimit();
     }
   }
+
+  const updateTimeLimit = () => {
+    const startDate = form.getValues('quizStartDatetime');
+    const endDate = form.getValues('quizEndDatetime');
+
+    if (startDate && endDate) {
+      const diffInMinutes = Math.floor(
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60)
+      );
+      form.setValue('timeLimit', diffInMinutes > 0 ? diffInMinutes : 0);
+    }
+  };
 
   return (
     <Card className='mx-auto w-full'>
@@ -339,9 +353,10 @@ export default function QuizForm({ initialData, pageTitle }: QuizFormProps) {
                     <FormControl>
                       <Input
                         type='number'
-                        placeholder='Enter time limit'
+                        placeholder='Auto-calculated'
                         {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        disabled
+                        value={field.value || 0}
                       />
                     </FormControl>
                     <FormMessage />

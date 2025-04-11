@@ -38,7 +38,7 @@ const API = {
   },
   quiz: {
     all: '/quiz',
-    getById:'/quiz/admin/get-by-id',
+    getById: '/quiz/admin/get-by-id',
     get: '/quiz/admin/quiz'
   },
   quizResult: {
@@ -48,6 +48,9 @@ const API = {
     getAll: '/homepage',
     update: '/homepage',
     delete: '/homepage/delete'
+  },
+  notification: {
+    sendAll: '/notification/send-all'
   }
 };
 

@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  AppWindowIcon,
   ArrowRight,
   Book,
   Building,
@@ -74,6 +75,7 @@ export const Icons = {
   video: Video,
   book: Book,
   home: Home,
+  app: AppWindowIcon,
   'graduation-cap': GraduationCap,
   'notepad-text-dashed': NotepadText,
   gitHub: ({ ...props }: LucideProps) => (

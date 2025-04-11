@@ -205,6 +205,14 @@ export const navItems: NavItem[] = [
     shortcut: ['n', 'n'],
     isActive: false,
     items: [] // No child items
+  },
+  {
+    title: 'Notifications',
+    url: '/dashboard/notifications',
+    icon: 'app',
+    shortcut: ['a', 'a'],
+    isActive: false,
+    items: [] // No child items
   }
   // {
   //   title: 'Product',
