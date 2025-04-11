@@ -7,6 +7,7 @@ import { ResultOutAction } from './result-out-action';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<Quiz>[] = [
   {
@@ -24,6 +25,28 @@ export const columns: ColumnDef<Quiz>[] = [
   {
     accessorKey: 'questionCount',
     header: 'Question Count'
+  },
+  {
+    accessorKey: 'quizStartDatetime',
+    header: 'Start Date and Time',
+    cell: ({ row }) => {
+      return row?.original?.quizStartDatetime ? (
+        <p>{format(row?.original?.quizStartDatetime, 'dd/MM/yyyy hh:mm aa')}</p>
+      ) : (
+        ''
+      );
+    }
+  },
+  {
+    accessorKey: 'quizEndDatetime',
+    header: 'End Date and Time',
+    cell: ({ row }) => {
+      return row?.original?.quizEndDatetime ? (
+        <p>{format(row?.original?.quizEndDatetime, 'dd/MM/yyyy hh:mm aa')}</p>
+      ) : (
+        ''
+      );
+    }
   },
   {
     accessorKey: 'viewResult',

@@ -14,7 +14,7 @@ export const columns: ColumnDef<QuizResult>[] = [
   },
   {
     accessorKey: 'correctAnswers',
-    header: 'Time Limit'
+    header: 'Correct  Answers'
   },
   {
     accessorKey: 'wrongAnswers',

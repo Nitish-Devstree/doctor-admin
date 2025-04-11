@@ -106,6 +106,8 @@ export type Quiz = {
   description: string;
   timeLimit: number;
   isResultOut: boolean;
+  quizStartDatetime: string;
+  quizEndDatetime: string;
   questions: Array<{
     _id?: string;
     question: string;
