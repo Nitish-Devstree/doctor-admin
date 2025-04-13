@@ -169,8 +169,8 @@ export default function UniversityForm({
 
     facilities: initialData?.facilities || [],
     languages: initialData?.languages || [],
-    ranking: initialData?.ranking || '',
-    numberOfStudents: initialData?.numberOfStudents || ''
+    ranking: String(initialData?.ranking) || '',
+    numberOfStudents: String(initialData?.numberOfStudents) || ''
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
