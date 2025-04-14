@@ -47,6 +47,14 @@ import {
   MinusIcon
 } from '@radix-ui/react-icons';
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
+import type { Level } from '@tiptap/extension-heading';
+
 interface RichTextEditorProps {
   value?: string;
   placeholder?: string;
@@ -105,295 +113,446 @@ export function RichTextEditor({
 
   return (
     <div className={className}>
-      <div className='mb-3 flex flex-wrap items-center gap-2'>
-        <ToggleGroup type='multiple' size='sm' variant='outline'>
-          <ToggleGroupItem
-            value='bold'
-            aria-label='Toggle bold'
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            disabled={!editor.can().chain().focus().toggleBold().run()}
-            data-state={editor.isActive('bold') ? 'on' : 'off'}
-          >
-            <FontBoldIcon className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='strike'
-            aria-label='Toggle strikethrough'
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            disabled={!editor.can().chain().focus().toggleStrike().run()}
-            data-state={editor.isActive('strike') ? 'on' : 'off'}
-          >
-            <Strikethrough className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='italic'
-            aria-label='Toggle italic'
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            disabled={!editor.can().chain().focus().toggleItalic().run()}
-            data-state={editor.isActive('italic') ? 'on' : 'off'}
-          >
-            <FontItalicIcon className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='underline'
-            aria-label='Toggle underline'
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            disabled={!editor.can().chain().focus().toggleUnderline().run()}
-            data-state={editor.isActive('underline') ? 'on' : 'off'}
-          >
-            <UnderlineIcon className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='code'
-            aria-label='Toggle code'
-            onClick={() => editor.chain().focus().toggleCode().run()}
-            disabled={!editor.can().chain().focus().toggleCode().run()}
-            data-state={editor.isActive('code') ? 'on' : 'off'}
-          >
-            <Code className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='highlight'
-            aria-label='Toggle highlight'
-            onClick={() => editor.chain().focus().toggleHighlight().run()}
-            disabled={!editor.can().chain().focus().toggleHighlight().run()}
-            data-state={editor.isActive('highlight') ? 'on' : 'off'}
-          >
-            <Highlighter className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='clear'
-            aria-label='Clear formatting'
-            onClick={() =>
-              editor.chain().focus().clearNodes().unsetAllMarks().run()
-            }
-            disabled={
-              !editor.can().chain().focus().clearNodes().unsetAllMarks().run()
-            }
-            data-state='off'
-          >
-            <RemoveFormattingIcon className='size-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
+      <TooltipProvider>
+        <div className='mb-3 flex flex-wrap items-center gap-2'>
+          <ToggleGroup type='multiple' size='sm' variant='outline'>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='bold'
+                  aria-label='Toggle bold'
+                  onClick={() => editor.chain().focus().toggleBold().run()}
+                  disabled={!editor.can().chain().focus().toggleBold().run()}
+                  data-state={editor.isActive('bold') ? 'on' : 'off'}
+                >
+                  <FontBoldIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Bold</TooltipContent>
+            </Tooltip>
 
-        <ToggleGroup type='single' size='sm' variant='outline'>
-          <ToggleGroupItem
-            value='h1'
-            aria-label='Heading 1'
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 1 }).run()
-            }
-            disabled={
-              !editor.can().chain().focus().toggleHeading({ level: 1 }).run()
-            }
-            data-state={editor.isActive('heading', { level: 1 }) ? 'on' : 'off'}
-          >
-            <Heading1 className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='h2'
-            aria-label='Heading 2'
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 2 }).run()
-            }
-            disabled={
-              !editor.can().chain().focus().toggleHeading({ level: 2 }).run()
-            }
-            data-state={editor.isActive('heading', { level: 2 }) ? 'on' : 'off'}
-          >
-            <Heading2 className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='h3'
-            aria-label='Heading 3'
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 3 }).run()
-            }
-            disabled={
-              !editor.can().chain().focus().toggleHeading({ level: 3 }).run()
-            }
-            data-state={editor.isActive('heading', { level: 3 }) ? 'on' : 'off'}
-          >
-            <Heading3 className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='h4'
-            aria-label='Heading 4'
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 4 }).run()
-            }
-            disabled={
-              !editor.can().chain().focus().toggleHeading({ level: 4 }).run()
-            }
-            data-state={editor.isActive('heading', { level: 4 }) ? 'on' : 'off'}
-          >
-            <Heading4 className='size-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='strike'
+                  aria-label='Toggle strikethrough'
+                  onClick={() => editor.chain().focus().toggleStrike().run()}
+                  disabled={!editor.can().chain().focus().toggleStrike().run()}
+                  data-state={editor.isActive('strike') ? 'on' : 'off'}
+                >
+                  <Strikethrough className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Strikethrough</TooltipContent>
+            </Tooltip>
 
-        <ToggleGroup type='multiple' size='sm' variant='outline'>
-          <ToggleGroupItem
-            value='blockquote'
-            aria-label='Toggle blockquote'
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            disabled={!editor.can().chain().focus().toggleBlockquote().run()}
-            data-state={editor.isActive('blockquote') ? 'on' : 'off'}
-          >
-            <Quote className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='bulletList'
-            aria-label='Toggle bullet list'
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
-            disabled={!editor.can().chain().focus().toggleBulletList().run()}
-            data-state={editor.isActive('bulletList') ? 'on' : 'off'}
-          >
-            <List className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='orderedList'
-            aria-label='Toggle ordered list'
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            disabled={!editor.can().chain().focus().toggleOrderedList().run()}
-            data-state={editor.isActive('orderedList') ? 'on' : 'off'}
-          >
-            <ListOrdered className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='horizontalRule'
-            aria-label='Add horizontal rule'
-            onClick={() => editor.chain().focus().setHorizontalRule().run()}
-            disabled={!editor.can().chain().focus().setHorizontalRule().run()}
-            data-state='off'
-          >
-            <MinusIcon className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='superscript'
-            aria-label='Toggle superscript'
-            onClick={() => editor.chain().focus().toggleSuperscript().run()}
-            disabled={!editor.can().chain().focus().toggleSuperscript().run()}
-            data-state={editor.isActive('superscript') ? 'on' : 'off'}
-          >
-            <SuperscriptIcon className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='subscript'
-            aria-label='Toggle subscript'
-            onClick={() => editor.chain().focus().toggleSubscript().run()}
-            disabled={!editor.can().chain().focus().toggleSubscript().run()}
-            data-state={editor.isActive('subscript') ? 'on' : 'off'}
-          >
-            <Subscript className='size-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='italic'
+                  aria-label='Toggle italic'
+                  onClick={() => editor.chain().focus().toggleItalic().run()}
+                  disabled={!editor.can().chain().focus().toggleItalic().run()}
+                  data-state={editor.isActive('italic') ? 'on' : 'off'}
+                >
+                  <FontItalicIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Italic</TooltipContent>
+            </Tooltip>
 
-        <ToggleGroup type='single' size='sm' variant='outline'>
-          <ToggleGroupItem
-            value='link'
-            aria-label='Add link'
-            onClick={() => {
-              const url = window.prompt('Enter URL');
-              if (url) {
-                editor
-                  .chain()
-                  .focus()
-                  .setLink({
-                    href: url,
-                    target: '_blank',
-                    rel: 'noopener noreferrer'
-                  })
-                  .run();
-              }
-            }}
-            disabled={
-              !editor
-                .can()
-                .chain()
-                .focus()
-                .setLink({ href: 'https://example.com' })
-                .run()
-            }
-            data-state={editor.isActive('link') ? 'on' : 'off'}
-          >
-            <LinkIcon className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='link'
-            aria-label='Add link'
-            onClick={() => {
-              editor.chain().focus().unsetLink().run();
-            }}
-            disabled={!editor.can().chain().focus().unsetLink().run()}
-          >
-            <Unlink className='size-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='underline'
+                  aria-label='Toggle underline'
+                  onClick={() => editor.chain().focus().toggleUnderline().run()}
+                  disabled={
+                    !editor.can().chain().focus().toggleUnderline().run()
+                  }
+                  data-state={editor.isActive('underline') ? 'on' : 'off'}
+                >
+                  <UnderlineIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Underline</TooltipContent>
+            </Tooltip>
 
-        <ToggleGroup type='single' size='sm' variant='outline'>
-          <ToggleGroupItem
-            value='left'
-            aria-label='Align left'
-            onClick={() => editor.chain().focus().setTextAlign('left').run()}
-            disabled={!editor.can().chain().focus().setTextAlign('left').run()}
-            data-state={editor.isActive({ textAlign: 'left' }) ? 'on' : 'off'}
-          >
-            <AlignLeft className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='center'
-            aria-label='Align center'
-            onClick={() => editor.chain().focus().setTextAlign('center').run()}
-            disabled={
-              !editor.can().chain().focus().setTextAlign('center').run()
-            }
-            data-state={editor.isActive({ textAlign: 'center' }) ? 'on' : 'off'}
-          >
-            <AlignCenter className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='right'
-            aria-label='Align right'
-            onClick={() => editor.chain().focus().setTextAlign('right').run()}
-            disabled={!editor.can().chain().focus().setTextAlign('right').run()}
-            data-state={editor.isActive({ textAlign: 'right' }) ? 'on' : 'off'}
-          >
-            <AlignRight className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='justify'
-            aria-label='Align justify'
-            onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-            disabled={
-              !editor.can().chain().focus().setTextAlign('justify').run()
-            }
-            data-state={
-              editor.isActive({ textAlign: 'justify' }) ? 'on' : 'off'
-            }
-          >
-            <AlignJustify className='size-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='code'
+                  aria-label='Toggle code'
+                  onClick={() => editor.chain().focus().toggleCode().run()}
+                  disabled={!editor.can().chain().focus().toggleCode().run()}
+                  data-state={editor.isActive('code') ? 'on' : 'off'}
+                >
+                  <Code className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Code</TooltipContent>
+            </Tooltip>
 
-        <ToggleGroup type='single' size='sm' variant='outline'>
-          <ToggleGroupItem
-            value='undo'
-            aria-label='Undo'
-            onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().chain().focus().undo().run()}
-          >
-            <Undo className='size-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value='redo'
-            aria-label='Redo'
-            onClick={() => editor.chain().focus().redo().run()}
-            disabled={!editor.can().chain().focus().redo().run()}
-          >
-            <Redo className='size-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='highlight'
+                  aria-label='Toggle highlight'
+                  onClick={() => editor.chain().focus().toggleHighlight().run()}
+                  disabled={
+                    !editor.can().chain().focus().toggleHighlight().run()
+                  }
+                  data-state={editor.isActive('highlight') ? 'on' : 'off'}
+                >
+                  <Highlighter className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Highlight</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='clear'
+                  aria-label='Clear formatting'
+                  onClick={() =>
+                    editor.chain().focus().clearNodes().unsetAllMarks().run()
+                  }
+                  disabled={
+                    !editor
+                      .can()
+                      .chain()
+                      .focus()
+                      .clearNodes()
+                      .unsetAllMarks()
+                      .run()
+                  }
+                  data-state='off'
+                >
+                  <RemoveFormattingIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Clear Formatting</TooltipContent>
+            </Tooltip>
+          </ToggleGroup>
+
+          <ToggleGroup type='single' size='sm' variant='outline'>
+            {([1, 2, 3, 4] as Level[]).map((level) => {
+              const Icon = [Heading1, Heading2, Heading3, Heading4][level - 1];
+              return (
+                <Tooltip key={level}>
+                  <TooltipTrigger asChild>
+                    <ToggleGroupItem
+                      value={`h${level}`}
+                      aria-label={`Heading ${level}`}
+                      onClick={() =>
+                        editor.chain().focus().toggleHeading({ level }).run()
+                      }
+                      disabled={
+                        !editor
+                          .can()
+                          .chain()
+                          .focus()
+                          .toggleHeading({ level })
+                          .run()
+                      }
+                      data-state={
+                        editor.isActive('heading', { level }) ? 'on' : 'off'
+                      }
+                    >
+                      <Icon className='size-4' />
+                    </ToggleGroupItem>
+                  </TooltipTrigger>
+                  <TooltipContent>Heading {level}</TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </ToggleGroup>
+
+          <ToggleGroup type='multiple' size='sm' variant='outline'>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='blockquote'
+                  aria-label='Toggle blockquote'
+                  onClick={() =>
+                    editor.chain().focus().toggleBlockquote().run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().toggleBlockquote().run()
+                  }
+                  data-state={editor.isActive('blockquote') ? 'on' : 'off'}
+                >
+                  <Quote className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Blockquote</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='bulletList'
+                  aria-label='Toggle bullet list'
+                  onClick={() =>
+                    editor.chain().focus().toggleBulletList().run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().toggleBulletList().run()
+                  }
+                  data-state={editor.isActive('bulletList') ? 'on' : 'off'}
+                >
+                  <List className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Bullet List</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='orderedList'
+                  aria-label='Toggle ordered list'
+                  onClick={() =>
+                    editor.chain().focus().toggleOrderedList().run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().toggleOrderedList().run()
+                  }
+                  data-state={editor.isActive('orderedList') ? 'on' : 'off'}
+                >
+                  <ListOrdered className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Ordered List</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='horizontalRule'
+                  aria-label='Add horizontal rule'
+                  onClick={() =>
+                    editor.chain().focus().setHorizontalRule().run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().setHorizontalRule().run()
+                  }
+                  data-state='off'
+                >
+                  <MinusIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Horizontal Rule</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='superscript'
+                  aria-label='Toggle superscript'
+                  onClick={() =>
+                    editor.chain().focus().toggleSuperscript().run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().toggleSuperscript().run()
+                  }
+                  data-state={editor.isActive('superscript') ? 'on' : 'off'}
+                >
+                  <SuperscriptIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Superscript</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='subscript'
+                  aria-label='Toggle subscript'
+                  onClick={() => editor.chain().focus().toggleSubscript().run()}
+                  disabled={
+                    !editor.can().chain().focus().toggleSubscript().run()
+                  }
+                  data-state={editor.isActive('subscript') ? 'on' : 'off'}
+                >
+                  <Subscript className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Subscript</TooltipContent>
+            </Tooltip>
+          </ToggleGroup>
+
+          <ToggleGroup type='single' size='sm' variant='outline'>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='link'
+                  aria-label='Add link'
+                  onClick={() => {
+                    const url = window.prompt('Enter URL');
+                    if (url) {
+                      editor
+                        .chain()
+                        .focus()
+                        .setLink({
+                          href: url,
+                          target: '_blank',
+                          rel: 'noopener noreferrer'
+                        })
+                        .run();
+                    }
+                  }}
+                  disabled={
+                    !editor
+                      .can()
+                      .chain()
+                      .focus()
+                      .setLink({ href: 'https://example.com' })
+                      .run()
+                  }
+                  data-state={editor.isActive('link') ? 'on' : 'off'}
+                >
+                  <LinkIcon className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Add Link</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='unlink'
+                  aria-label='Remove link'
+                  onClick={() => {
+                    editor.chain().focus().unsetLink().run();
+                  }}
+                  disabled={!editor.can().chain().focus().unsetLink().run()}
+                >
+                  <Unlink className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Remove Link</TooltipContent>
+            </Tooltip>
+          </ToggleGroup>
+
+          <ToggleGroup type='single' size='sm' variant='outline'>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='left'
+                  aria-label='Align left'
+                  onClick={() =>
+                    editor.chain().focus().setTextAlign('left').run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().setTextAlign('left').run()
+                  }
+                  data-state={
+                    editor.isActive({ textAlign: 'left' }) ? 'on' : 'off'
+                  }
+                >
+                  <AlignLeft className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Align Left</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='center'
+                  aria-label='Align center'
+                  onClick={() =>
+                    editor.chain().focus().setTextAlign('center').run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().setTextAlign('center').run()
+                  }
+                  data-state={
+                    editor.isActive({ textAlign: 'center' }) ? 'on' : 'off'
+                  }
+                >
+                  <AlignCenter className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Align Center</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='right'
+                  aria-label='Align right'
+                  onClick={() =>
+                    editor.chain().focus().setTextAlign('right').run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().setTextAlign('right').run()
+                  }
+                  data-state={
+                    editor.isActive({ textAlign: 'right' }) ? 'on' : 'off'
+                  }
+                >
+                  <AlignRight className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Align Right</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='justify'
+                  aria-label='Align justify'
+                  onClick={() =>
+                    editor.chain().focus().setTextAlign('justify').run()
+                  }
+                  disabled={
+                    !editor.can().chain().focus().setTextAlign('justify').run()
+                  }
+                  data-state={
+                    editor.isActive({ textAlign: 'justify' }) ? 'on' : 'off'
+                  }
+                >
+                  <AlignJustify className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Justify</TooltipContent>
+            </Tooltip>
+          </ToggleGroup>
+
+          <ToggleGroup type='single' size='sm' variant='outline'>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='undo'
+                  aria-label='Undo'
+                  onClick={() => editor.chain().focus().undo().run()}
+                  disabled={!editor.can().chain().focus().undo().run()}
+                >
+                  <Undo className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Undo</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleGroupItem
+                  value='redo'
+                  aria-label='Redo'
+                  onClick={() => editor.chain().focus().redo().run()}
+                  disabled={!editor.can().chain().focus().redo().run()}
+                >
+                  <Redo className='size-4' />
+                </ToggleGroupItem>
+              </TooltipTrigger>
+              <TooltipContent>Redo</TooltipContent>
+            </Tooltip>
+          </ToggleGroup>
+        </div>
+      </TooltipProvider>
 
       <EditorContent editor={editor} />
     </div>
